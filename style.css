@@ -1,0 +1,46 @@
+.red {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+    float: left;
+    margin: 10px;
+    text-align: center;
+    color: blue;
+    font-size: 20;
+}
+p {
+    text-align: center;
+}
+.blue {
+    height: 50px;
+    width: 50px;
+    background-color: blue;
+    margin: 10px;
+    float: right;
+    text-align: center;
+    color: red;
+    font-size: 20;
+}
+.show {
+    height: 200px;
+    width: 180px;
+    border: solid 0.5px;
+    margin: 2px;
+    margin: auto;
+    font-size: 100;
+    text-align: center;
+}
+#banner {
+    height: 100px;
+    width: 300px;
+    border: solid 0.5px;
+    margin: auto;
+    margin-top: 5px;
+    text-align: center;
+}
+#redShow {
+    float: left;
+}
+#blueShow {
+    float: right;
+}
