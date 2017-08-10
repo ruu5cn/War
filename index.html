@@ -1,8 +1,175 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel='stylesheet' href='style.css'/>
-	<script src='script.js'></script>
+	<style>
+        .red {
+            height: 50px;
+            width: 50px;
+            background-color: red;
+            float: left;
+            margin: 10px;
+            text-align: center;
+            color: blue;
+            font-size: 20;
+        }
+        p {
+            text-align: center;
+        }
+        .blue {
+            height: 50px;
+            width: 50px;
+            background-color: blue;
+            margin: 10px;
+            float: right;
+            text-align: center;
+            color: red;
+            font-size: 20;
+        }
+        .show {
+            height: 200px;
+            width: 180px;
+            border: solid 0.5px #b0ffa0;
+            margin: 2px;
+            margin: auto;
+            font-size: 100;
+            text-align: center;
+            color: #b0ffa0;
+        }
+        #banner {
+            height: 100px;
+            width: 300px;
+            border: solid 0.5px #b0ffa0;
+            margin: auto;
+            margin-top: 5px;
+            text-align: center;
+            color: #b0ffa0;
+        }
+        #redShow {
+            float: left;
+        }
+        #blueShow {
+            float: right;
+        }
+        body {
+            background-color: black;
+        }
+        h1 {
+            color: #b0ffa0;
+        }
+        button {
+            background-color: #b0ffa0;
+            border-radius: 5px;
+        }
+	</style>
+	<script>
+	    var Rdeck = 26;
+        var Rwon = 0;
+        var Bdeck = 26;
+        var Bwon = 0;
+        var cardList = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+        var weight = 0;
+        
+        var x = function() {
+            var RdeckN = document.getElementById('redDeck');
+            var RwonN = document.getElementById('redWon');
+            var BdeckN = document.getElementById('blueDeck');
+            var BwonN = document.getElementById('blueWon');
+            var Rshow = document.getElementById('redShow');
+            var Bshow = document.getElementById('blueShow');
+            var banner = document.getElementById('banner');
+            var dec;
+            var needed;
+            
+            var Rdraw = Math.floor(Math.random()*13);
+            var Bdraw = Math.floor(Math.random()*13);
+            
+            //resets cards
+            if (Rdeck < 1 || Bdeck < 1) {
+                if (Rdeck < 1) {
+                    Rdeck = Rwon;
+                    Rwon = 0;
+                }
+                if (Bdeck < 1) {
+                    Bdeck = Bwon;
+                    Bwon = 0;
+                }
+                dec = "Resetting decks";
+            }
+            //if you have to declare war
+            else if (weight > 0) {
+                if (Rdeck < 3 || Bdeck < 3) {
+                    if (Rdeck + Rwon < 3) {
+                        needed = 3 - (Rdeck + Rwon);
+                        weight -= needed;
+                        Rdeck = 0;
+                    } else {
+                        Rdeck -= 3;
+                    }
+                    if (Bdeck + Bwon < 3) {
+                        needed = 3 - (Bdeck + Bwon);
+                        weight -= needed;
+                        Bdeck = 0;
+                    } else {
+                        Bdeck -= 3;
+                    }
+                    Rdeck += Rwon;
+                    Rwon = 0;
+                    Bdeck += Bwon;
+                    Bwon = 0;
+                } else {
+                    Rdeck -= 3;
+                    Bdeck -= 3;
+                }
+                if (Rdraw > Bdraw) {
+                    dec = "We declare war! Red wins!";
+                    Rwon += weight;
+                    weight = 0;
+                } else if (Bdraw > Rdraw) {
+                    dec = "We declare war! Blue wins!";
+                    Bwon += weight;
+                    weight = 0;
+                } else {
+                    dec = "We declare war! It's a tie! We have to declare war again!";
+                    weight += 6;
+                }
+            }
+            //regular
+            else {
+                Rdeck -= 1;
+                Bdeck -= 1;
+                
+                if (Rdraw > Bdraw) {
+                    dec = 'Red Won!';
+                    Rwon += 2;
+                }
+                else if (Bdraw > Rdraw) {
+                    dec = 'Blue Won!';
+                    Bwon += 2;
+                }
+                else {
+                    dec = "It's a tie! We have to declare war!";
+                    weight += 8;
+                }
+            }
+            //checks to see if game is over
+            if (Rdeck + Rwon === 0) {
+                dec = "Blue has won the game";
+            } else if (Bdeck + Bwon === 0) {
+                dec = "Red has won the game";
+            }
+            
+            Rdraw = cardList[Rdraw];
+            Bdraw = cardList[Bdraw];
+            
+            Rshow.innerHTML = Rdraw;
+            Bshow.innerHTML = Bdraw;
+            RdeckN.innerHTML = Rdeck;
+            RwonN.innerHTML = Rwon;
+            BdeckN.innerHTML = Bdeck;
+            BwonN.innerHTML = Bwon;
+            banner.innerHTML = dec;
+        }
+    </script>
 </head>
 <body>
     <h1 style='text-align: center;'>War</h1>
