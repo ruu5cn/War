@@ -62,12 +62,13 @@
         }
 	</style>
 	<script>
-	    var Rdeck = 26;
+	var Rdeck = 26;
         var Rwon = 0;
         var Bdeck = 26;
         var Bwon = 0;
         var cardList = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
         var weight = 0;
+	var ended = false;
         
         var x = function() {
             var RdeckN = document.getElementById('redDeck');
@@ -79,7 +80,6 @@
             var banner = document.getElementById('banner');
             var dec;
             var needed;
-            
             var Rdraw = Math.floor(Math.random()*13);
             var Bdraw = Math.floor(Math.random()*13);
             
@@ -101,6 +101,7 @@
                     if (Rdeck + Rwon < 3) {
                         needed = 3 - (Rdeck + Rwon);
                         weight -= needed;
+			Rwon = 0;
                         Rdeck = 0;
                     } else {
                         Rdeck -= 3;
@@ -108,6 +109,7 @@
                     if (Bdeck + Bwon < 3) {
                         needed = 3 - (Bdeck + Bwon);
                         weight -= needed;
+			Bwon = 0;
                         Bdeck = 0;
                     } else {
                         Bdeck -= 3;
@@ -154,8 +156,10 @@
             //checks to see if game is over
             if (Rdeck + Rwon === 0) {
                 dec = "Blue has won the game";
+		ended = true;
             } else if (Bdeck + Bwon === 0) {
                 dec = "Red has won the game";
+		ended = true;
             }
             
             Rdraw = cardList[Rdraw];
@@ -169,11 +173,16 @@
             BwonN.innerHTML = Bwon;
             banner.innerHTML = dec;
         }
-    </script>
+	var play = function() {
+		if ended === false {
+			x();
+		}
+	}
+    	</script>
 </head>
 <body>
     <h1 style='text-align: center;'>War</h1>
-    <p><button onclick='x()'>Click</button></p>
+    <p><button onclick='play()'>Click</button></p>
     <div id='redDeck' class='red'>26</div>
     <div id='redWon' class='red'>0</div>
     <div id='blueWon' class='blue'>0</div>
